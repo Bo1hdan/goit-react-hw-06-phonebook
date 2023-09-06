@@ -4,10 +4,16 @@ import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
 import { nanoid } from 'nanoid';
 import css from 'components/ContactForm/ContactForm.module.css';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState([]);
+
+  // const [filter, setFilter] = useState('');
+  const contacts = useSelector(state => state.contactsForm.contact);
+  const filter = useSelector(state => state.contactsForm.filter);
+  const dispatch = useDispatch();
 
   const handleAddContact = values => {
     const { name, number } = values;
@@ -24,18 +30,30 @@ const App = () => {
         number,
         id: nanoid(),
       };
-      setContacts(prevContacts => [...prevContacts, newContact]);
+      // setContacts(prevContacts => [...prevContacts, newContact]);
+      dispatch({
+        type: 'contactForm/setContacts',
+        payload: [...contacts, newContact],
+      });
     }
   };
 
   const handleFilterChange = filterValue => {
-    setFilter(filterValue);
+    // setFilter(filterValue);
+    dispatch({
+      type: 'contactsForm/setFilter',
+      payload: filterValue,
+    });
   };
 
   const handleDeleteContact = contactId => {
-    setContacts(prevContacts =>
-      prevContacts.filter(contact => contact.id !== contactId)
-    );
+    // setContacts(prevContacts =>
+    //   prevContacts.filter(contact => contact.id !== contactId)
+    // );
+    dispatch({
+      type: 'contactForm/deleteContact',
+      payload: contactId,
+    });
   };
 
   useEffect(() => {
@@ -44,11 +62,19 @@ const App = () => {
     );
 
     if (contactsFromLocalStorage) {
-      setContacts(contactsFromLocalStorage);
+      // setContacts(contactsFromLocalStorage);
+      dispatch({
+        type: 'contactForm/setContacts',
+        payload: contactsFromLocalStorage,
+      });
     } else {
-      setContacts([]); //
+      // setContacts([]);
+      dispatch({
+        type: 'contactForm/setContacts',
+        payload: [],
+      });
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (contacts !== null) {
