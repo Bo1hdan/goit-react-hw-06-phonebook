@@ -19,18 +19,14 @@ const contactFormSlice = createSlice({
         contact => contact.id !== action.payload
       );
     },
-    saveContact(state, action) {
-      state.contacts.map(contact =>
-        contact.id === action.payload.id ? action.payload : contact
-      );
-    },
+
     setFilter(state, action) {
       state.filter = action.payload;
     },
   },
 });
 
-export const { setContacts, deleteContact, saveContact, setFilter } =
+export const { setContacts, deleteContact, setFilter } =
   contactFormSlice.actions;
 
 export const selectContactForm = state => state.contactsForm.contacts;
