@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
@@ -6,13 +6,17 @@ import { nanoid } from 'nanoid';
 import css from 'components/ContactForm/ContactForm.module.css';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import {
+  deleteContact,
+  selectContactForm,
+  selectFilter,
+  setContacts,
+  setFilter,
+} from 'redux/contactFormReducer';
 
 const App = () => {
-  // const [contacts, setContacts] = useState([]);
-
-  // const [filter, setFilter] = useState('');
-  const contacts = useSelector(state => state.contactsForm.contact);
-  const filter = useSelector(state => state.contactsForm.filter);
+  const contacts = useSelector(selectContactForm);
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const handleAddContact = values => {
@@ -30,30 +34,17 @@ const App = () => {
         number,
         id: nanoid(),
       };
-      // setContacts(prevContacts => [...prevContacts, newContact]);
-      dispatch({
-        type: 'contactForm/setContacts',
-        payload: [...contacts, newContact],
-      });
+
+      dispatch(setContacts([...contacts, newContact]));
     }
   };
 
   const handleFilterChange = filterValue => {
-    // setFilter(filterValue);
-    dispatch({
-      type: 'contactsForm/setFilter',
-      payload: filterValue,
-    });
+    dispatch(setFilter(filterValue));
   };
 
   const handleDeleteContact = contactId => {
-    // setContacts(prevContacts =>
-    //   prevContacts.filter(contact => contact.id !== contactId)
-    // );
-    dispatch({
-      type: 'contactForm/deleteContact',
-      payload: contactId,
-    });
+    dispatch(deleteContact(contactId));
   };
 
   useEffect(() => {
@@ -62,17 +53,9 @@ const App = () => {
     );
 
     if (contactsFromLocalStorage) {
-      // setContacts(contactsFromLocalStorage);
-      dispatch({
-        type: 'contactForm/setContacts',
-        payload: contactsFromLocalStorage,
-      });
+      dispatch(setContacts(contactsFromLocalStorage));
     } else {
-      // setContacts([]);
-      dispatch({
-        type: 'contactForm/setContacts',
-        payload: [],
-      });
+      dispatch(setContacts([]));
     }
   }, [dispatch]);
 
