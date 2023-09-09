@@ -6,16 +6,16 @@ import { nanoid } from 'nanoid';
 import css from 'components/ContactForm/ContactForm.module.css';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import {
-  deleteContact,
-  selectContactForm,
-  setContacts,
-} from 'redux/contactFormReducer';
-import { setFilter, selectFilter } from 'redux/filterReducer';
+import { deleteContact, setContacts } from 'redux/contactFormReducer';
+
+import { setFilter } from 'redux/filterReducer';
 
 const App = () => {
-  const contacts = useSelector(selectContactForm);
-  const filter = useSelector(selectFilter);
+  const contacts = useSelector(state => state.contacts.contacts); // Access the 'contacts' slice
+  const filter = useSelector(state => state.filter); // Access the 'filter' slice
+
+  // const contacts = useSelector(selectContactForm);
+  // const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const handleAddContact = values => {

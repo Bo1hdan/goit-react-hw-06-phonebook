@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const contactFormSlice = createSlice({
-  name: 'contact',
+  name: 'contacts',
 
   initialState,
 
@@ -30,7 +30,9 @@ export const contactFormSlice = createSlice({
 export const { setContacts, deleteContact } = contactFormSlice.actions;
 
 // export const selectContactForm = state => state.contactsForm.contacts;
-export const selectContactForm = state => state.contactForm.contacts;
+// export const selectContactForm = state => state.contactForm.contacts;
+
+export const selectContactForm = state => state.contacts.contacts;
 
 export const contactFormReducer = contactFormSlice.reducer;
 
