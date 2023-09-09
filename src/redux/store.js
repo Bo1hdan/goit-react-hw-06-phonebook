@@ -1,4 +1,4 @@
-import { contactFormPersistedReducer } from 'redux/contactFormReducer';
+// import { contactFormPersistedReducer } from 'redux/contactFormReducer';
 import { configureStore } from '@reduxjs/toolkit';
 import {
   persistStore,
@@ -9,11 +9,23 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { reducer } from 'redux/reducer';
+
+const persistConfig = {
+  key: 'contactsForm',
+  storage,
+};
+
+export const contactFormPersistedReducer = persistReducer(
+  persistConfig,
+  reducer
+);
 
 export const store = configureStore({
-  reducer: {
-    contactsForm: contactFormPersistedReducer,
-  },
+  // contactFormReducer: contactFormPersistedReducer,
+  reducer: contactFormPersistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

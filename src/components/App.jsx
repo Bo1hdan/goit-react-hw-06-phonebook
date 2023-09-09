@@ -9,10 +9,9 @@ import { useDispatch } from 'react-redux';
 import {
   deleteContact,
   selectContactForm,
-  selectFilter,
   setContacts,
-  setFilter,
 } from 'redux/contactFormReducer';
+import { setFilter, selectFilter } from 'redux/filterReducer';
 
 const App = () => {
   const contacts = useSelector(selectContactForm);

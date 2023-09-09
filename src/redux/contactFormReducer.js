@@ -1,14 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+// import { persistReducer } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage';
 
 const initialState = {
   contacts: [],
-  filter: '',
 };
 
-const contactFormSlice = createSlice({
-  name: 'contactsForm',
+export const contactFormSlice = createSlice({
+  name: 'contact',
 
   initialState,
 
@@ -22,26 +21,27 @@ const contactFormSlice = createSlice({
       );
     },
 
-    setFilter(state, action) {
-      state.filter = action.payload;
-    },
+    // setFilter(state, action) {
+    //   state.filter = action.payload;
+    // },
   },
 });
 
-export const { setContacts, deleteContact, setFilter } =
-  contactFormSlice.actions;
+export const { setContacts, deleteContact } = contactFormSlice.actions;
 
-export const selectContactForm = state => state.contactsForm.contacts;
-export const selectFilter = state => state.contactsForm.filter || '';
-
-const persistConfig = {
-  key: 'contactsForm',
-  storage,
-};
+// export const selectContactForm = state => state.contactsForm.contacts;
+export const selectContactForm = state => state.contactForm.contacts;
 
 export const contactFormReducer = contactFormSlice.reducer;
 
-export const contactFormPersistedReducer = persistReducer(
-  persistConfig,
-  contactFormReducer
-);
+// const persistConfig = {
+//   key: 'contactsForm',
+//   storage,
+// };
+
+// export const contactFormReducer = contactFormSlice.reducer;
+
+// export const contactFormPersistedReducer = persistReducer(
+//   persistConfig,
+//   contactFormReducer
+// );
