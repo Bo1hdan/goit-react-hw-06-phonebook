@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
@@ -47,23 +47,23 @@ const App = () => {
     dispatch(deleteContact(contactId));
   };
 
-  useEffect(() => {
-    const contactsFromLocalStorage = JSON.parse(
-      localStorage.getItem('contacts')
-    );
+  // useEffect(() => {
+  //   const contactsFromLocalStorage = JSON.parse(
+  //     localStorage.getItem('contacts')
+  //   );
 
-    if (contactsFromLocalStorage) {
-      dispatch(setContacts(contactsFromLocalStorage));
-    } else {
-      dispatch(setContacts([]));
-    }
-  }, [dispatch]);
+  //   if (contactsFromLocalStorage) {
+  //     dispatch(setContacts(contactsFromLocalStorage));
+  //   } else {
+  //     dispatch(setContacts([]));
+  //   }
+  // }, [dispatch]);
 
-  useEffect(() => {
-    if (contacts !== null) {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    }
-  }, [contacts]);
+  // useEffect(() => {
+  //   if (contacts !== null) {
+  //     localStorage.setItem('contacts', JSON.stringify(contacts));
+  //   }
+  // }, [contacts]);
 
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())

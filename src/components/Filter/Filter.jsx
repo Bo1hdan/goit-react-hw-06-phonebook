@@ -6,7 +6,7 @@ const Filter = ({ filter, onFilterChange }) => {
     onFilterChange(e.currentTarget.value);
   };
 
-  return <input type="text" value={filter} onChange={handleChange} />;
+  return <input type="text" onChange={handleChange} />;
 };
 
 Filter.propTypes = {
