@@ -1,17 +1,44 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from 'nanoid';
+import { selectContactForm, setContacts } from 'redux/contactFormReducer';
+
 import css from 'components/ContactForm/ContactForm.module.css';
 
 const ContactForm = ({ onAddContact }) => {
-  const handleSubmit = (values, { resetForm }) => {
-    onAddContact(values);
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContactForm);
+
+  const handleAddContact = (values, { resetForm }) => {
+    const { name, number } = values;
+
+    const existingContact = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (existingContact) {
+      alert(`Contact with the name "${name}" already exists!`);
+    } else {
+      const newContact = {
+        name,
+        number,
+        id: nanoid(),
+      };
+
+      dispatch(setContacts([...contacts, newContact]));
+    }
+
     resetForm();
   };
 
   return (
     <div className={css.formWrap}>
-      <Formik initialValues={{ name: '', number: '' }} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={{ name: '', number: '' }}
+        onSubmit={handleAddContact}
+      >
         <Form autoComplete="off">
           <div>
             <label htmlFor="name">Name</label>
@@ -41,7 +68,7 @@ const ContactForm = ({ onAddContact }) => {
 };
 
 ContactForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
+  onAddContact: PropTypes.func,
 };
 
 export default ContactForm;

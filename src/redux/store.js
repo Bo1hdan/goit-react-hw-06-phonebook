@@ -24,7 +24,6 @@ export const contactFormPersistedReducer = persistReducer(
 );
 
 export const store = configureStore({
-  // contactFormReducer: contactFormPersistedReducer,
   reducer: contactFormPersistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
